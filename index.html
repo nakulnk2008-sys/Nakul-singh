@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For You ❤️</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Home Screen -->
+  <div class="screen active" id="home">
+    <h1>Hey Love 💕</h1>
+    <p>I wish I could be there with you right now… 🤍</p>
+
+    <button onclick="goTo('actions')">Send Love 💖</button>
+    <button onclick="goTo('gifts')">Open Gifts 🎁</button>
+    <button onclick="goTo('notes')">Love Notes 💌</button>
+    <button onclick="goTo('care')">Take Care 🧸</button>
+  </div>
+
+  <!-- Actions Screen -->
+  <div class="screen" id="actions">
+    <h2>For You 🤍</h2>
+
+    <button onclick="sendHug()">🤗 Hug</button>
+    <button onclick="foreheadKiss()">💋 Forehead Kiss</button>
+    <button onclick="giveChocolate()">🍫 Chocolate</button>
+
+    <p id="response"></p>
+
+    <button onclick="goTo('home')">⬅ Back</button>
+  </div>
+
+  <!-- Gifts Screen -->
+  <div class="screen" id="gifts">
+    <h2>Your Gifts 🎁</h2>
+
+    <button onclick="surprise('flowers')">🌸 Flowers</button>
+    <button onclick="surprise('teddy')">🧸 Teddy</button>
+    <button onclick="surprise('letter')">💌 Letter</button>
+
+    <div id="giftArea"></div>
+
+    <button onclick="goTo('home')">⬅ Back</button>
+  </div>
+
+  <!-- Love Notes -->
+  <div class="screen" id="notes">
+    <h2>Love Notes 💌</h2>
+
+    <p id="noteText">Click below 💕</p>
+    <button onclick="newNote()">Show Note</button>
+
+    <button onclick="goTo('home')">⬅ Back</button>
+  </div>
+
+  <!-- Care Screen -->
+  <div class="screen" id="care">
+    <h2>Take Care 🧸</h2>
+
+    <ul>
+      <li>Drink warm water 💧</li>
+      <li>Use heating pad 🔥</li>
+      <li>Rest properly 🛌</li>
+      <li>Eat something sweet 🍫</li>
+      <li>I’m always here for you ❤️</li>
+    </ul>
+
+    <button onclick="goTo('home')">⬅ Back</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

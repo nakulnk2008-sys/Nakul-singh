@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .app {
+    width: 320px;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+  
+  .screen {
+    display: none;
+  }
+  
+  .screen.active {
+    display: block;
+  }
+  
+  button {
+    display: block;
+    margin: 8px auto;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #ff4b6e;
+    color: white;
+    cursor: pointer;
+  }
+  
+  #giftArea {
+    margin-top: 15px;
+    font-size: 20px;
+  }
+  
+  /* animations */
+  .heart {
+    position: absolute;
+    animation: floatUp 3s linear;
+  }
+  
+  @keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-500px); opacity: 0; }
+  }
+  
+  .chocolate {
+    position: absolute;
+    animation: fall 3s linear;
+  }
+  
+  @keyframes fall {
+    0% { transform: translateY(-50px); }
+    100% { transform: translateY(100vh); }
+  }
