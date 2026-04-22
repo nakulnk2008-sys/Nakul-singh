@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Message From Her Heart</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0020;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;overflow:hidden}
+#app{width:100%;max-width:540px;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 1.8rem;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#3d1060,#1a0530 55%,#0d0020)}
+.star{position:fixed;border-radius:50%;background:white;animation:twinkle var(--d) ease-in-out infinite alternate;z-index:0}
+@keyframes twinkle{from{opacity:.1;transform:scale(.6)}to{opacity:1;transform:scale(1.4)}}
+.petal{position:fixed;pointer-events:none;z-index:1;animation:pfall var(--pd) linear infinite;opacity:0}
+@keyframes pfall{0%{transform:translateY(-20px) rotate(0deg);opacity:.9}100%{transform:translateY(110vh) rotate(360deg) translateX(-30px);opacity:0}}
+.scene{display:none;flex-direction:column;align-items:center;gap:1.5rem;text-align:center;width:100%;animation:fadein .9s ease;position:relative;z-index:10}
+.scene.active{display:flex}
+@keyframes fadein{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+.emoji-big{font-size:78px;animation:pulse 2.2s ease-in-out infinite;filter:drop-shadow(0 0 22px rgba(255,100,160,.9))}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.ring-em{font-size:86px;animation:rp 1.8s ease-in-out infinite;filter:drop-shadow(0 0 28px gold) drop-shadow(0 0 55px rgba(255,180,0,.6))}
+@keyframes rp{0%,100%{transform:scale(1) rotate(-6deg)}50%{transform:scale(1.18) rotate(6deg)}}
+.prog{display:flex;gap:10px;margin-bottom:.3rem}
+.dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .5s}
+.dot.done{background:#ff6b9d;box-shadow:0 0 8px #ff6b9d}
+.dot.now{background:white;box-shadow:0 0 12px white,0 0 24px rgba(255,255,255,.4)}
+.card{width:100%;border-radius:20px;padding:1.5rem 1.7rem}
+.hcard{background:rgba(255,80,140,.08);border:1px solid rgba(255,120,170,.3);box-shadow:0 0 28px rgba(255,80,140,.1)}
+.hlabel{font-size:.76rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,180,210,.5);margin-bottom:9px}
+.htext{font-size:1.12rem;color:#ffcce0;line-height:1.78;font-style:italic}
+.ycard{width:100%;border-radius:20px;padding:1.35rem 1.7rem;background:rgba(80,220,140,.08);border:1px solid rgba(100,230,160,.3);opacity:0;transform:translateY(14px) scale(.97);transition:opacity .9s ease,transform .9s ease;text-align:right}
+.ycard.show{opacity:1;transform:translateY(0) scale(1);box-shadow:0 0 38px rgba(80,220,140,.18)}
+.ylabel{font-size:.76rem;letter-spacing:2px;text-transform:uppercase;color:rgba(140,255,190,.5);margin-bottom:9px}
+.ytext{font-size:1.28rem;color:#b0ffcc;font-weight:bold;line-height:1.5}
+.div{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,150,200,.4),transparent);margin:0 auto}
+.cfem{position:fixed;font-size:24px;animation:cf var(--cd) linear forwards;pointer-events:none;z-index:30}
+@keyframes cf{0%{transform:translateY(-40px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(400deg);opacity:0}}
+.ititle{font-size:2rem;color:#ffcce0;text-shadow:0 0 38px rgba(255,100,150,.5);line-height:1.4;font-style:italic}
+.isub{font-size:1.05rem;color:rgba(255,200,220,.6);line-height:1.85}
+.tdots{display:none;justify-content:flex-end;width:100%;padding-right:8px}
+.tdots.show{display:flex}
+.tdots span{width:8px;height:8px;border-radius:50%;background:rgba(255,150,190,.5);animation:bl 1.2s ease-in-out infinite;display:inline-block;margin:0 3px}
+.tdots span:nth-child(2){animation-delay:.2s}
+.tdots span:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+.fin-card{width:100%;border-radius:20px;padding:1.9rem;background:rgba(255,100,150,.07);border:1px solid rgba(255,140,180,.22);box-shadow:0 0 48px rgba(255,80,140,.12)}
+.fl{font-size:1.08rem;color:#ffcce0;margin:.55rem 0;line-height:1.6}
+.ff{font-size:.9rem;color:rgba(255,255,255,.4);margin-top:1.1rem;font-style:italic;line-height:1.7}
+.btn{padding:15px 50px;font-size:1.22rem;background:linear-gradient(135deg,#ff6b9d,#c44d8b);color:white;border:none;border-radius:50px;cursor:pointer;box-shadow:0 6px 28px rgba(255,107,157,.5);font-family:Georgia,serif;letter-spacing:1px;transition:transform .2s}
+.btn:hover{transform:scale(1.07)}
+.btn-gift{padding:17px 42px;font-size:1.3rem;background:linear-gradient(135deg,#ff6b9d,#c44d8b);color:white;border:none;border-radius:50px;cursor:pointer;font-family:Georgia,serif;letter-spacing:1px;animation:gp 2s ease-in-out infinite;transition:transform .2s}
+.btn-gift:hover{transform:scale(1.1);animation:none}
+@keyframes gp{0%,100%{box-shadow:0 6px 28px rgba(255,107,157,.5),0 0 0 0 rgba(255,107,157,.3)}50%{box-shadow:0 6px 28px rgba(255,107,157,.6),0 0 0 16px rgba(255,107,157,0)}}
+.btn-ghost{padding:10px 26px;font-size:.95rem;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.4);border-radius:50px;cursor:pointer;font-family:Georgia,serif;transition:all .2s}
+.btn-ghost:hover{color:rgba(255,255,255,.7)}
+#gbox{cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.5rem;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s}
+.gem{font-size:108px;display:block;filter:drop-shadow(0 0 28px rgba(255,100,150,.8)) drop-shadow(0 0 55px rgba(200,50,180,.5));animation:gb 1.8s ease-in-out infinite;transition:transform .3s}
+@keyframes gb{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-15px) rotate(3deg)}}
+#gbox:hover .gem{animation:none;transform:scale(1.15) rotate(5deg)}
+.tap{font-size:.83rem;color:rgba(255,180,210,.5);letter-spacing:2px;text-transform:uppercase;animation:hb 2s ease-in-out infinite}
+@keyframes hb{0%,100%{opacity:.3}50%{opacity:1}}
+.ily{font-size:2.9rem;font-style:italic;font-weight:bold;background:linear-gradient(135deg,#ff6b9d,#ffb3d9,#ffe0f0,#ff6b9d);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gs 3s ease infinite,tf 3s ease-in-out infinite;line-height:1.3}
+@keyframes gs{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes tf{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.lcard{width:100%;border-radius:22px;padding:1.9rem 1.7rem;background:rgba(255,80,140,.06);border:1px solid rgba(255,140,190,.18);box-shadow:0 0 55px rgba(255,80,140,.14),inset 0 0 38px rgba(255,80,140,.05)}
+.lmsg{font-size:1.03rem;color:#ffcce0;line-height:2.1;font-style:italic}
+.lsig{font-size:.92rem;color:rgba(255,200,220,.5);font-style:italic;line-height:1.7}
+.bh{position:fixed;pointer-events:none;z-index:5;animation:hr var(--hd) ease-in forwards;opacity:0}
+@keyframes hr{0%{transform:translateY(110vh) scale(.4) rotate(var(--hr));opacity:0}15%{opacity:1}100%{transform:translateY(-20vh) scale(1.3) rotate(var(--hr));opacity:0}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stars"></div>
+  <div id="petals"></div>
+
+  <div class="scene active" id="s0">
+    <div class="emoji-big">🌹</div>
+    <div class="ititle">She has something<br/>to ask you…</div>
+    <div class="div"></div>
+    <div class="isub">Five questions from her heart.<br/>And you already know every answer. 💕</div>
+    <button class="btn" onclick="startStory()">Open her heart ✨</button>
+  </div>
+
+  <div class="scene" id="s1">
+    <div class="prog" id="p1"></div>
+    <div class="emoji-big">💖</div>
+    <div class="card hcard"><div class="hlabel">✦ She asks you ✦</div><div class="htext">Will you go on a date with me?☕💫</div></div>
+    <div class="tdots" id="t1"><span></span><span></span><span></span></div>
+    <div class="ycard" id="y1"><div class="ylabel">✦ You say ✦</div><div class="ytext">Yes! A thousand times, yes! 💕</div></div>
+  </div>
+
+  <div class="scene" id="s2">
+    <div class="prog" id="p2"></div>
+    <div class="emoji-big">🌟</div>
+    <div class="card hcard"><div class="hlabel">✦ She asks you ✦</div><div class="htext">Will you be my best friend?🌙</div></div>
+    <div class="tdots" id="t2"><span></span><span></span><span></span></div>
+    <div class="ycard" id="y2"><div class="ylabel">✦ You say ✦</div><div class="ytext">Always and forever, I'm yours my betu! 🤗✨</div></div>
+  </div>
+
+  <div class="scene" id="s3">
+    <div class="prog" id="p3"></div>
+    <div class="emoji-big">🌙</div>
+    <div class="card hcard"><div class="hlabel">✦ She asks you ✦</div><div class="htext">Will you be mine?💞</div></div>
+    <div class="tdots" id="t3"><span></span><span></span><span></span></div>
+    <div class="ycard" id="y3"><div class="ylabel">✦ You say ✦</div><div class="ytext">Yes — always yours, completely and always! 💫</div></div>
+  </div>
+
+  <div class="scene" id="s4">
+    <div class="prog" id="p4"></div>
+    <div class="emoji-big">🥂</div>
+    <div class="card hcard"><div class="hlabel">✦ She asks you ✦</div><div class="htext">Will you be my partner in everything?🌅</div></div>
+    <div class="tdots" id="t4"><span></span><span></span><span></span></div>
+    <div class="ycard" id="y4"><div class="ylabel">✦ You say ✦</div><div class="ytext">In everything, with every piece of my heart! ❤️‍🔥</div></div>
+  </div>
+
+  <div class="scene" id="s5">
+    <div class="prog" id="p5"></div>
+    <div class="ring-em">💍</div>
+    <div class="card hcard" style="background:rgba(255,215,0,.06);border-color:rgba(255,215,0,.3);box-shadow:0 0 38px rgba(255,215,0,.14)">
+      <div class="hlabel" style="color:rgba(255,220,120,.6)">✦ She gets on one knee ✦</div>
+      <div class="htext" style="color:#ffe8a0;font-size:1.2rem">Will you marry me? 💍🌌</div>
+    </div>
+    <div class="tdots" id="t5"><span></span><span></span><span></span></div>
+    <div class="ycard" id="y5" style="background:rgba(255,215,0,.08);border-color:rgba(255,215,0,.35)">
+      <div class="ylabel" style="color:rgba(255,220,120,.6)">✦ You say ✦</div>
+      <div class="ytext" style="color:#ffe4a0;font-size:1.48rem">YES Cutiee! A million times YES! 💍🎊</div>
+    </div>
+  </div>
+
+  <div class="scene" id="s6">
+    <div class="ring-em" style="font-size:66px">🎊</div>
+    <div class="ititle" style="color:#ffe4a0;font-size:1.82rem">You said YES to everything! 💍</div>
+    <div class="fin-card">
+      <div class="fl">To dates full of laughter & morning coffee ☕💖</div>
+      <div class="div" style="margin:.75rem auto"></div>
+      <div class="fl">To a friendship deeper than the ocean 🌊🌟</div>
+      <div class="div" style="margin:.75rem auto"></div>
+      <div class="fl">To being hers, and her being yours 🌙💞</div>
+      <div class="div" style="margin:.75rem auto"></div>
+      <div class="fl">To forever — together, always 💍✨</div>
+      <div class="ff">You are her favourite story, and she can't wait<br/>to keep writing every chapter with you. 🌹</div>
+    </div>
+    <button class="btn-gift" onclick="gotoGift()">🎁 He left you a gift…</button>
+    <button class="btn-ghost" onclick="restart()">Relive it again 🌹</button>
+  </div>
+
+  <div class="scene" id="s7">
+    <div class="ititle" style="font-size:1.52rem">He wrapped something<br/>just for you… 🎀</div>
+    <div id="gbox" onclick="openGift()">
+      <span class="gem">🎁</span>
+      <span class="tap">tap to unwrap</span>
+    </div>
+    <div class="isub" style="font-size:.92rem;color:rgba(255,200,220,.4)">Something special is waiting inside ✨</div>
+  </div>
+
+  <div class="scene" id="s8">
+    <div class="ily">I Love You 💖</div>
+    <div class="div" style="width:110px"></div>
+    <div class="lcard">
+      <div class="lmsg">
+        First of all i love you yrr,<br/>
+        kbhi ye mt oschiyo tune mera trust toda and all mujhe hmesha terpe trust rhega.—<br/>
+        you were the one I Prayed for. 🌹<br/><br/>
+        aur haa eak WARNING meri taraf se bhi hai,<br/>
+        sry mt bola kar aur ye bhi mt sochiyo kii tune mujhe hurt kiya.<br/>
+        every single morning. 💫<br/><br/>
+        You are my favourite notification,🥰<br/><br/>
+        Thank you for being you.<br/>
+        Thank you for being mine. 💍
+      </div>
+    </div>
+    <div class="lsig">— always & forever yours 🌙</div>
+    <button class="btn" onclick="restart()">Start over 🌹</button>
+  </div>
+</div>
+
+<script>
+const QR=2500,TD=2000,AR=3000,NP=2000,TOTAL=5;
+let tmr=null;
+
+(function mkStars(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2.5+.5;s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*4+1.5).toFixed(1)}s;animation-delay:${(Math.random()*4).toFixed(1)}s;position:fixed`;c.appendChild(s)}})();
+
+(function spawnPetals(){setInterval(()=>{const c=document.getElementById('petals');const em=['🌸','🌹','💮'];const p=document.createElement('div');p.className='petal';p.textContent=em[Math.floor(Math.random()*em.length)];p.style.cssText=`left:${Math.random()*100}%;top:-20px;--pd:${(Math.random()*6+5).toFixed(1)}s;animation-delay:${(Math.random()*2).toFixed(1)}s;font-size:${Math.random()*10+12}px`;c.appendChild(p);setTimeout(()=>p.remove(),12000)},1400)})();
+
+function buildProg(n){const el=document.getElementById('p'+n);if(!el)return;el.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i<n?' done':i===n?' now':'');el.appendChild(d)}}
+
+function burst(big){const em=big?['💍','🎊','✨','🌟','💖','🎉','💫','👑']:['🎊','✨','💖','🌹','💕','💫'];for(let i=0;i<18;i++){const el=document.createElement('div');el.className='cfem';el.textContent=em[Math.floor(Math.random()*em.length)];el.style.cssText=`left:${Math.random()*100}%;top:-30px;--cd:${(Math.random()*2.5+1.5).toFixed(1)}s;animation-delay:${(Math.random()*.6).toFixed(1)}s;position:fixed`;document.body.appendChild(el);setTimeout(()=>el.remove(),5000)}}
+
+function rainHearts(){const em=['💖','💕','💗','💓','❤️','💝','💘','💞','🌹','✨','💫'];for(let i=0;i<26;i++){const h=document.createElement('div');h.className='bh';const sz=Math.random()*36+18;h.textContent=em[Math.floor(Math.random()*em.length)];h.style.cssText=`left:${Math.random()*100}%;bottom:-60px;font-size:${sz}px;--hd:${(Math.random()*3+2).toFixed(1)}s;--hr:${(Math.random()*40-20).toFixed(0)}deg;animation-delay:${(Math.random()*1.5).toFixed(1)}s`;document.body.appendChild(h);setTimeout(()=>h.remove(),7000)}}
+
+function showScene(n){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));const el=document.getElementById('s'+n);if(el){el.classList.add('active');buildProg(n)}}
+
+function startStory(){showScene(1);runScene(1)}
+
+function runScene(n){clearTimeout(tmr);tmr=setTimeout(()=>{const t=document.getElementById('t'+n);if(t)t.classList.add('show');tmr=setTimeout(()=>{if(t)t.classList.remove('show');const yb=document.getElementById('y'+n);if(yb)yb.classList.add('show');burst(n===5);tmr=setTimeout(()=>{tmr=setTimeout(()=>{if(n<5){showScene(n+1);runScene(n+1)}else setTimeout(()=>showScene(6),1000)},NP)},AR)},TD)},QR)}
+
+function gotoGift(){showScene(7)}
+
+function openGift(){
+  const gb=document.getElementById('gbox');
+  if(gb){gb.style.transform='scale(1.3)';setTimeout(()=>{gb.style.transform='scale(0) rotate(25deg)';gb.style.opacity='0'},280)}
+  setTimeout(()=>{showScene(8);rainHearts();burst(true);setTimeout(rainHearts,1600);setTimeout(rainHearts,3200)},750)
+}
+
+function restart(){
+  clearTimeout(tmr);
+  for(let i=1;i<=5;i++){const y=document.getElementById('y'+i);if(y)y.classList.remove('show');const t=document.getElementById('t'+i);if(t)t.classList.remove('show')}
+  const gb=document.getElementById('gbox');if(gb){gb.style.transform='';gb.style.opacity='1'}
+  showScene(0)
+}
+</script>
+</body>
+</html>
